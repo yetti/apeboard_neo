@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "start rdbg",
+      "type": "shell",
+      "command": "PUMA_SINGLE_MODE=true bin/rdbg --open -c bin/rails server",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "rails",
+        "pattern": {
+          "regexp": "^.*$",
+        },
+        "background": {
+          "activeOnStart": false,
+          "beginsPattern": "^(Puma starting in single mode\\.\\.\\.).*$",
+          "endsPattern": "^(DEBUGGER: Disconnected\\.)$"
+        }
+      }
+    }
+  ]
+}

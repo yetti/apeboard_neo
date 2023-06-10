@@ -1,0 +1,283 @@
+require:
+  - standard
+  - rubocop-rails
+  - rubocop-minitest
+  - rubocop-capybara
+  - rubocop-performance
+
+inherit_gem:
+  standard: config/base.yml
+
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - "node_modules/**/*"
+    - "public/**/*"
+    - "vendor/**/*"
+    - "db/**/*"
+    - "bin/**/*"
+    - "tmp/**/*"
+    - "config/**/*"
+    - "lib/tasks/auto_annotate_models.rake"
+
+Rails/ActionFilter:
+  Enabled: true
+  EnforcedStyle: action
+  Include:
+    - app/controllers/**/*.rb
+
+Rails/ActiveRecordAliases:
+  Enabled: true
+
+Rails/ActiveSupportAliases:
+  Enabled: true
+
+Rails/ApplicationJob:
+  Enabled: true
+
+Rails/ApplicationRecord:
+  Enabled: true
+
+Rails/AssertNot:
+  Enabled: true
+  Include:
+    - '**/test/**/*'
+
+Rails/Blank:
+  Enabled: true
+  # Convert usages of `nil? || empty?` to `blank?`
+  NilOrEmpty: true
+  # Convert usages of `!present?` to `blank?`
+  NotPresent: true
+  # Convert usages of `unless present?` to `if blank?`
+  UnlessPresent: true
+
+Rails/BulkChangeTable:
+  Enabled: true
+  Database: null
+  Include:
+    - db/migrate/*.rb
+
+Rails/CreateTableWithTimestamps:
+  Enabled: true
+  Include:
+    - db/migrate/*.rb
+
+Rails/Date:
+  Enabled: true
+  EnforcedStyle: flexible
+
+Rails/Delegate:
+  Enabled: true
+  EnforceForPrefixed: true
+
+Rails/DelegateAllowBlank:
+  Enabled: true
+
+Rails/DynamicFindBy:
+  Enabled: true
+  Whitelist:
+    - find_by_sql
+
+Rails/EnumUniqueness:
+  Enabled: true
+  Include:
+    - app/models/**/*.rb
+
+Rails/EnvironmentComparison:
+  Enabled: true
+
+Rails/Exit:
+  Enabled: true
+  Include:
+    - app/**/*.rb
+    - config/**/*.rb
+    - lib/**/*.rb
+  Exclude:
+    - lib/**/*.rake
+
+Rails/FilePath:
+  Enabled: true
+  EnforcedStyle: arguments
+
+Rails/FindBy:
+  Enabled: true
+  Include:
+    - app/models/**/*.rb
+
+Rails/FindEach:
+  Enabled: true
+  Include:
+    - app/models/**/*.rb
+
+Rails/HasAndBelongsToMany:
+  Enabled: true
+  Include:
+    - app/models/**/*.rb
+
+Rails/HttpPositionalArguments:
+  Enabled: true
+  Include:
+    - 'spec/**/*'
+    - 'test/**/*'
+
+Rails/HttpStatus:
+  Enabled: true
+  EnforcedStyle: symbolic
+
+Rails/InverseOf:
+  Enabled: true
+  Include:
+    - app/models/**/*.rb
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: true
+  Safe: false
+  Include:
+    - app/controllers/**/*.rb
+
+Rails/NotNullColumn:
+  Enabled: true
+  Include:
+    - db/migrate/*.rb
+
+Rails/Output:
+  Enabled: true
+  Include:
+    - app/**/*.rb
+    - config/**/*.rb
+    - db/**/*.rb
+    - lib/**/*.rb
+
+Rails/OutputSafety:
+  Enabled: true
+
+Rails/PluralizationGrammar:
+  Enabled: true
+
+Rails/Presence:
+  Enabled: true
+
+Rails/Present:
+  Enabled: true
+  NotNilAndNotEmpty: true
+  NotBlank: true
+  UnlessBlank: true
+
+Rails/ReadWriteAttribute:
+  Enabled: true
+  Include:
+    - app/models/**/*.rb
+
+Rails/RedundantReceiverInWithOptions:
+  Enabled: true
+
+Rails/RefuteMethods:
+  Enabled: true
+  Include:
+    - '**/test/**/*'
+
+Rails/RelativeDateConstant:
+  Enabled: true
+  AutoCorrect: false
+
+Rails/RequestReferer:
+  Enabled: true
+  EnforcedStyle: referer
+
+Rails/ReversibleMigration:
+  Enabled: true
+  Include:
+    - db/migrate/*.rb
+
+Rails/SafeNavigation:
+  Enabled: true
+  ConvertTry: false
+
+Rails/ScopeArgs:
+  Enabled: true
+  Include:
+    - app/models/**/*.rb
+
+Rails/TimeZone:
+  Enabled: true
+  EnforcedStyle: flexible
+
+Rails/UniqBeforePluck:
+  Enabled: true
+  EnforcedStyle: conservative
+  AutoCorrect: false
+
+Rails/Validation:
+  Enabled: true
+  Include:
+    - app/models/**/*.rb
+
+Bundler/OrderedGems:
+  Enabled: true
+  AutoCorrect: true
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+Layout/LineLength:
+  Enabled: true
+  AutoCorrect: true
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: true
+Lint/MixedRegexpCaptureTypes:
+  Enabled: true
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - 'config/environments/development.rb'
+    - 'config/environments/production.rb'
+Performance/AncestorsInclude:
+  Enabled: true
+Performance/BigDecimalWithNumericArgument:
+  Enabled: true
+Performance/RedundantSortBlock:
+  Enabled: true
+Performance/RedundantStringChars:
+  Enabled: true
+Performance/ReverseFirst:
+  Enabled: true
+Performance/SortReverse:
+  Enabled: true
+Performance/Squeeze:
+  Enabled: true
+Performance/StringInclude:
+  Enabled: true
+Style/AccessorGrouping:
+  Enabled: true
+Style/BisectedAttrAccessor:
+  Enabled: true
+Style/ClassAndModuleChildren:
+  Enabled: true
+  AutoCorrect: true
+Style/Documentation:
+  Enabled: false
+Style/ExponentialNotation:
+  Enabled: true
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
+Style/RedundantAssignment:
+  Enabled: true
+Style/RedundantFetchBlock:
+  Enabled: true
+Style/RedundantRegexpCharacterClass:
+  Enabled: true
+Style/RedundantRegexpEscape:
+  Enabled: true
+Style/SlicingWithRange:
+  Enabled: true
