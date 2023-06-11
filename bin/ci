@@ -9,7 +9,7 @@ echo "[ bin/ci ] Setting HEADLESS to true"
 export HEADLESS=true
 
 echo "[ bin/ci ] Clearing log and temp files"
-bin/rails log:clear tmp:clear
+bundle exec rails log:clear tmp:clear
 
 echo "[ bin/ci ] Analysing code for security vulnerabilities."
 echo "[ bin/ci ] Output will be in tmp/brakeman.html, which"
@@ -21,21 +21,24 @@ echo "[ bin/ci ] security vulnerabilities"
 bundle exec bundle audit check --update
 
 echo "[ bin/ci ] Preparing database"
-bin/rails db:reset || bin/rails db:prepare
+bundle exec rails db:reset || bundle exec rails db:prepare
 
 echo "[ bin/ci ] Linting source"
 bundle exec rubocop -A --parallel
 
-echo "[ bin/erb_lint ] Linting ERB"
+echo "[ bin/ci ] Linting ERB"
 bin/erb_lint
 
+echo "[ bin/ci ] Precompile assets"
+bundle exec rails assets:precompile
+
 echo "[ bin/ci ] Running tests"
-bin/rails test
+bundle exec rails test
 
 echo "[ bin/ci ] Done"
 
 echo "[ bin/ci ] Clobbering precompiled assets"
-bin/rails assets:clobber
+bundle exec rails assets:clobber
 
 echo "[ bin/ci ] Unsetting HEADLESS"
 unset HEADLESS
