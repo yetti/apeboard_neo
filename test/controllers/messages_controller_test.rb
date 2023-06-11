@@ -1,6 +1,6 @@
-require "test_helper"
+require "application_integration_test_case"
 
-class MessagesControllerTest < ActionDispatch::IntegrationTest
+class MessagesControllerTest < ApplicationIntegrationTestCase
   setup do
     @message = create(:message)
   end
