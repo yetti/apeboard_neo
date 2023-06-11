@@ -6,6 +6,10 @@ require "simplecov_helper"
 require_relative "../config/environment"
 require "rails/test_help"
 
+require "factory_bot_rails"
+
+Dir[Rails.root.join("test", "support", "**", "*.rb")].each { |f| require f }
+
 module ActiveSupport
   class TestCase
     # Run tests in parallel with specified workers
@@ -15,5 +19,6 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+    include FactoryBot::Syntax::Methods
   end
 end
