@@ -4,3 +4,12 @@
 require_relative "config/application"
 
 Rails.application.load_tasks
+
+require "rake/testtask"
+
+Rake::TestTask.new(:test) do |t|
+  t.libs << "test"
+  t.pattern = "test/**/*_test.rb"
+end
+
+task default: :test

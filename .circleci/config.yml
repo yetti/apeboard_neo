@@ -2,6 +2,10 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+aliases:
+  - &results_path test/reports
+  - &screenshots_path tmp/screenshots
+
 # Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
 # See: https://circleci.com/docs/2.0/orb-intro/
 orbs:
@@ -14,7 +18,7 @@ orbs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   security:
-    resource_class: large
+    resource_class: medium
     docker:
       - image: cimg/ruby:3.2.2-node
     executor: ruby/default
@@ -30,7 +34,7 @@ jobs:
           command: 'bundle exec bundle audit check --update'
           name: 'Analyse Ruby gems for security vulnerabilities'
   linting:
-    resource_class: large
+    resource_class: medium
     docker:
       - image: cimg/ruby:3.2.2-node
     executor: ruby/default
@@ -48,14 +52,12 @@ jobs:
           command: 'bin/erb_lint'
           name: 'Lint ERB'
   test:
-    resource_class: large
+    resource_class: medium
     docker:
       - image: cimg/ruby:3.2.2-browsers
-
       - image: cimg/postgres:15.3
         environment:
           POSTGRES_USER: postgres
-
       - image: cimg/go:1.20
       - image: cimg/redis:7.0
 
@@ -66,7 +68,7 @@ jobs:
       CI: 'true'
       DATABASE_URL: postgres://postgres:@localhost:5432/apeboard_neo_test
       REDIS_URL: redis://localhost:6379
-    parallelism: 2
+    parallelism: 4
     steps:
       - checkout
       - ruby/install-deps
@@ -89,12 +91,27 @@ jobs:
           command: bundle exec rails assets:precompile
           name: Precompile assets
       - run:
+          name: Save test filenames, splitting out slower system tests
+          command: |
+            circleci tests glob "test/**/*_test.rb" > test_all.txt
+            grep -v "test/system" test_all.txt > test_main.txt
+            grep "test/system" test_all.txt > test_system.txt
+      - run:
+          name: Run Rails non-system tests
           command: |
             TEST_FILES="$(circleci tests split test_main.txt --split-by=timings)"
             bundle exec rails test $TEST_FILES
-          name: Run tests
       - store_test_results:
-          path: test/reports
+          path: *results_path
+      - run:
+          name: Run Rails system tests
+          command: |
+            TEST_FILES="$(circleci tests split test_system.txt --split-by=timings)"
+            bundle exec rails test $TEST_FILES
+      - store_test_results:
+          path: *results_path
+      - store_artifacts:
+          path: *screenshots_path
       - codecov/upload
 
 # Invoke jobs via workflows
