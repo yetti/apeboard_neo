@@ -2,22 +2,33 @@ require "test_helper"
 
 class MessagesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @message = messages(:one)
+    @message = create(:message)
   end
 
   test "should get index" do
     get messages_url
+
     assert_response :success
   end
 
   test "should get new" do
     get new_message_url
+
     assert_response :success
   end
 
   test "should create message" do
     assert_difference("Message.count") do
-      post messages_url, params: { message: { email: @message.email, message: @message.message, name: @message.name, subject: @message.subject, url: @message.url } }
+      post messages_url,
+        params: {
+          message: {
+            email: Faker::Internet.email,
+            message: Faker::Lorem.paragraph(sentence_count: 3),
+            name: Faker::Internet.username(specifier: 5..8),
+            subject: Faker::Lorem.sentence(word_count: 3),
+            url: Faker::Internet.url
+          }
+        }
     end
 
     assert_redirected_to message_url(Message.last)
@@ -25,16 +36,28 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
   test "should show message" do
     get message_url(@message)
+
     assert_response :success
   end
 
   test "should get edit" do
     get edit_message_url(@message)
+
     assert_response :success
   end
 
   test "should update message" do
-    patch message_url(@message), params: { message: { email: @message.email, message: @message.message, name: @message.name, subject: @message.subject, url: @message.url } }
+    patch message_url(@message),
+      params: {
+        message: {
+          email: Faker::Internet.email,
+          message: Faker::Lorem.paragraph(sentence_count: 3),
+          name: Faker::Internet.username(specifier: 5..8),
+          subject: Faker::Lorem.sentence(word_count: 3),
+          url: Faker::Internet.url
+        }
+      }
+
     assert_redirected_to message_url(@message)
   end
 
