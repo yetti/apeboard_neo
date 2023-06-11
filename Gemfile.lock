@@ -139,6 +139,7 @@ GEM
       concurrent-ruby (~> 1.1)
       webrick (~> 1.7)
       websocket-driver (>= 0.6, < 0.8)
+    foreman (0.87.2)
     globalid (1.1.0)
       activesupport (>= 5.0)
     hashdiff (1.0.1)
@@ -309,6 +310,10 @@ GEM
       rubocop-performance (~> 1.18.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
+    tailwindcss-rails (2.0.29-arm64-darwin)
+      railties (>= 6.0.0)
+    tailwindcss-rails (2.0.29-x86_64-linux)
+      railties (>= 6.0.0)
     thor (1.2.2)
     timeout (0.3.2)
     turbo-rails (1.4.0)
@@ -358,6 +363,7 @@ DEPENDENCIES
   erb_lint
   factory_bot_rails
   faker
+  foreman
   hiredis (~> 0.6.3)
   hiredis-client (~> 0.14.0)
   jbuilder
@@ -380,6 +386,7 @@ DEPENDENCIES
   sprockets-rails
   standard
   stimulus-rails
+  tailwindcss-rails (~> 2.0)
   turbo-rails
   tzinfo-data
   web-console
