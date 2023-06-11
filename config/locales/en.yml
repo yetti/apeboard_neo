@@ -31,3 +31,10 @@
 
 en:
   hello: "Hello world"
+  messages:
+    create:
+      success: "Message was successfully created."
+    update:
+      success: "Message was successfully updated."
+    destroy:
+        success: "Message was successfully destroyed."
